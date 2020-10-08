@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="FilterModal">
     <button @click="openModal">
       <span>필터</span>
     </button>
@@ -8,20 +8,22 @@
         <span @click="closeModal">
           <i class="fas fa-times"></i>
         </span>
-        <div class="modalHeader">
-          <span>필터</span>
-        </div>
-        <div class="modalBody" v-for="(cate, idx) in category" :key="idx">
-          <div class="categoryBox">
-            <input
-              type="checkbox"
-              :checked="cate.id"
-              :name="cate.name"
-              :id="cate.id"
-              :value="cate.id"
-              v-model="this.$store.state.selectedCategory"
-            />
-            <label :for="cate.name">{{ cate.name }}</label>
+        <div class="modalWrapper">
+          <div class="modalHeader">
+            <span>필터</span>
+          </div>
+          <div class="modalBody" v-for="(cate, idx) in category" :key="idx">
+            <div class="categoryBox">
+              <input
+                type="checkbox"
+                :checked="cate.id"
+                :name="cate.name"
+                :id="cate.id"
+                :value="cate.id"
+                v-model="this.$store.state.selectedCategory"
+              />
+              <label :for="cate.name">{{ cate.name }}</label>
+            </div>
           </div>
         </div>
         <div class="modalFooter">
@@ -134,7 +136,6 @@ button {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    padding: 30px;
     width: 460px;
     height: 268px;
     background-color: #ffffff;
@@ -148,40 +149,47 @@ button {
       right: 12px;
       color: #adb5bd;
     }
-    .modalHeader {
-      font-family: SpoqaHanSans;
-      font-size: 22px;
-      font-weight: bold;
-      text-align: left;
-      color: #212529;
-    }
 
-    .modalBody {
-      display: flex;
-      flex-direction: column;
+    .modalWrapper {
+      position: absolute;
+      padding: 30px;
 
-      .categoryBox {
+      .modalHeader {
+        font-family: SpoqaHanSans;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: left;
+        color: #212529;
+        margin-bottom: 13px;
+      }
+
+      .modalBody {
         display: flex;
-        align-items: center;
-        margin-bottom: 15px;
+        flex-direction: column;
+        margin-bottom: 12px;
 
-        input {
-          width: 20px;
-          height: 20px;
-          margin-right: 5px;
-        }
+        .categoryBox {
+          display: flex;
+          align-items: center;
 
-        label {
-          width: 110px;
-          height: 16px;
-          font-family: SpoqaHanSans;
-          font-size: 16px;
-          font-weight: normal;
-          font-stretch: normal;
-          font-style: normal;
-          letter-spacing: normal;
-          text-align: left;
-          color: #495057;
+          input {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+
+          label {
+            width: 110px;
+            height: 16px;
+            font-family: SpoqaHanSans;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: #495057;
+          }
         }
       }
     }
@@ -189,7 +197,7 @@ button {
     .modalFooter {
       display: flex;
       flex-direction: row-reverse;
-      margin-top: 32px;
+      padding: 0 30px 30px;
 
       button {
         width: 99px;
@@ -209,6 +217,54 @@ button {
           letter-spacing: normal;
           text-align: left;
           color: #ffffff;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .modalFilter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+
+    .modalContainer {
+      width: 337px;
+      height: 268px;
+      margin: 130px 19px 272px;
+      padding: 0;
+      background-color: #ffffff;
+
+      .modalWrapper {
+        width: 100%;
+        height: 100%;
+
+        .modalBody {
+          .categoryBox {
+            margin: 0;
+          }
+        }
+      }
+
+      .modalFooter {
+        display: flex;
+        justify-content: center;
+        padding: 0 30px 30px;
+        margin: 0;
+
+        button {
+          width: 337px;
+          height: 40px;
+          border-radius: 3px;
+          background-color: #00c854;
         }
       }
     }

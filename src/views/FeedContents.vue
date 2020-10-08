@@ -9,26 +9,28 @@
       </aside>
       <section>
         <nav>
-          <div class="orderFilter">
-            <div
-              :class="{ on: ascending, off: !ascending }"
-              @click="ascendingActive"
-            >
-              <div class="circle"></div>
-              <span>오름차순</span>
+          <div class="navWrapper">
+            <div class="orderFilter">
+              <div
+                :class="{ on: ascending, off: !ascending }"
+                @click="ascendingActive"
+              >
+                <div class="circle"></div>
+                <span>오름차순</span>
+              </div>
+              <div
+                v-bind:class="{
+                  on: $store.state.descending,
+                  off: !$store.state.descending
+                }"
+                @click="descendingActive"
+              >
+                <div class="circle"></div>
+                <span>내림차순</span>
+              </div>
             </div>
-            <div
-              v-bind:class="{
-                on: $store.state.descending,
-                off: !$store.state.descending
-              }"
-              @click="descendingActive"
-            >
-              <div class="circle"></div>
-              <span>내림차순</span>
-            </div>
+            <FilterModal />
           </div>
-          <FilterModal />
         </nav>
         <article v-for="feed in $store.state.feedList" v-bind:key="feed.id">
           <div class="feedContainer">
@@ -224,6 +226,12 @@ main {
       align-items: center;
       justify-content: space-between;
 
+      .navWrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
       .orderFilter {
         display: flex;
 
@@ -283,6 +291,7 @@ main {
 
     article {
       margin-top: 11px;
+      width: 756px;
 
       .feedContainer {
         width: 100%;
@@ -369,9 +378,10 @@ main {
 
           .feedInfo {
             margin-top: 17px;
+            width: 100%;
 
             .title {
-              width: 748px;
+              width: 100%;
               font-family: SpoqaHanSans;
               font-size: 18px;
               font-weight: bold;
@@ -386,7 +396,7 @@ main {
             }
 
             .contents {
-              width: 756px;
+              width: 100%;
               margin-top: 15px;
               font-family: SpoqaHanSans;
               font-size: 16px;
@@ -399,6 +409,114 @@ main {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .feedContents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f5f7;
+
+    header {
+      width: 375px;
+      height: 45px;
+      padding: 0;
+      box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.07);
+      background-color: #ffffff;
+      backdrop-filter: blur(3px);
+
+      h1 {
+        padding-left: 15px;
+      }
+    }
+
+    main {
+      width: 375px;
+      margin-top: 1px;
+
+      aside {
+        display: none;
+      }
+
+      section {
+        width: 375px;
+        margin: 0;
+
+        nav {
+          width: 375px;
+          height: 44px;
+          background-color: #ffffff;
+          border-bottom: solid 1px #e1e4e7;
+
+          .navWrapper {
+            width: 100%;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+
+        article {
+          width: 375px;
+          height: 179px;
+          margin: 0 0 10px;
+          box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.05);
+          background-color: #ffffff;
+
+          .feedContainer {
+            width: 100%;
+            height: 179px;
+            border: none;
+            border-radius: 0;
+
+            .feedWrapper {
+              padding: 20px 15px;
+            }
+
+            .divider,
+            .createdAt {
+              display: none;
+            }
+
+            .feedInfo {
+              .title {
+                width: 316px;
+                height: 18px;
+                font-family: SpoqaHanSans;
+                font-size: 18px;
+                font-weight: bold;
+                font-stretch: normal;
+                font-style: normal;
+                letter-spacing: normal;
+                text-align: left;
+                color: #282c30;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+
+              .contents {
+                width: 324px;
+                height: 16px;
+                font-family: SpoqaHanSans;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: normal;
+                letter-spacing: normal;
+                text-align: left;
+                color: #495057;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
             }
           }
         }
