@@ -5,7 +5,7 @@
     </header>
     <main>
       <aside>
-        <button><span>로그인</span></button>
+        <button @click="checkStateData"><span>로그인</span></button>
       </aside>
       <section>
         <nav>
@@ -18,7 +18,10 @@
               <span>오름차순</span>
             </div>
             <div
-              v-bind:class="{ on: descending, off: !descending }"
+              v-bind:class="{
+                on: $store.state.descending,
+                off: !$store.state.descending
+              }"
               @click="descendingActive"
             >
               <div class="circle"></div>
@@ -27,7 +30,7 @@
           </div>
           <FilterModal />
         </nav>
-        <article v-for="feed in list" v-bind:key="feed.id">
+        <article v-for="feed in $store.state.feedList" v-bind:key="feed.id">
           <div class="feedContainer">
             <div class="feedWrapper">
               <div class="metaInfo">
@@ -59,12 +62,13 @@
 
 <script>
 import axios from "axios";
-import FilterModal from "@/components/FilterModal.vue";
+import { mapMutations } from "vuex";
+import FilterModal from "./FilterModal.vue";
 
 export default {
   name: "Home",
   components: {
-    FilterModal,
+    FilterModal
   },
 
   mounted() {
@@ -72,8 +76,8 @@ export default {
       .get(
         `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10&category[0]=1&category[1]=2&category[2]=3`
       )
-      .then((res) => {
-        this.list = res.data.data.reverse();
+      .then(res => {
+        this.getListData((this.list = res.data.data.reverse()));
       });
     window.addEventListener("scroll", this.onScroll);
   },
@@ -84,40 +88,47 @@ export default {
 
   data() {
     return {
-      list: [],
       page: 10,
-      ascending: true,
-      descending: false,
+      ascending: true
     };
   },
 
   methods: {
+    ...mapMutations(["getListData", "checkStateData", "getDescending"]),
     onScroll() {
       if (this.ascending) {
         if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+          let request = {
+            params: {
+              category: this.$store.state.selectedCategory
+            }
+          };
           this.page--;
           axios
             .get(
-              `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10&category[0]=1&category[1]=2&category[2]=3`
+              `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10`,
+              request
             )
-            .then((res) => {
+            .then(res => {
+              console.log(res.data.data, this.$store.state.selectedCategory);
               res.data.data.reverse();
               for (let i = 1; i < res.data.data.length; i++) {
-                this.list.push(res.data.data[i]);
+                this.$store.state.feedList.push(res.data.data[i]);
               }
             });
         }
       } else {
         if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
           this.page++;
+
           axios
             .get(
               `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10&category[0]=1&category[1]=2&category[2]=3`
             )
-            .then((res) => {
+            .then(res => {
               res.data.data;
               for (let i = 1; i < res.data.data.length; i++) {
-                this.list.push(res.data.data[i]);
+                this.$store.state.feedList.push(res.data.data[i]);
               }
             });
         }
@@ -125,31 +136,31 @@ export default {
     },
 
     descendingActive() {
-      this.descending = true;
+      this.$store.state.descending = true;
       this.ascending = false;
       this.page = 1;
       axios
         .get(
           `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10&category[0]=1&category[1]=2&category[2]=3`
         )
-        .then((res) => {
-          this.list = res.data.data;
+        .then(res => {
+          this.$store.state.feedList = res.data.data;
         });
     },
 
     ascendingActive() {
       this.ascending = true;
-      this.descending = false;
+      this.$store.state.descending = false;
       this.page = 10;
       axios
         .get(
           `https://problem.comento.kr/api/list?page=${this.page}&ord='asc'&limit=10&category[0]=1&category[1]=2&category[2]=3`
         )
-        .then((res) => {
-          this.list = res.data.data.reverse();
+        .then(res => {
+          this.$store.state.feedList = res.data.data.reverse();
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
