@@ -11,15 +11,6 @@ export default createStore({
     getListData(state, feedList) {
       state.feedList = feedList;
     },
-
-    getDescending(state, descending) {
-      state.descending = descending;
-    },
-
-    checkStateData(state) {
-      console.log("feedList: ", state.feedList);
-      console.log("descending: ", state.descending);
-    },
   },
   actions: {},
   modules: {},

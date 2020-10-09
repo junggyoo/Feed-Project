@@ -118,7 +118,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["getListData", "checkStateData", "getDescending"]),
+    ...mapMutations(["getListData"]),
     onScroll() {
       if (this.ascending) {
         if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
@@ -134,7 +134,6 @@ export default {
               request
             )
             .then(res => {
-              console.log(res.data.data, this.$store.state.selectedCategory);
               res.data.data.reverse();
               for (let i = 1; i < res.data.data.length; i++) {
                 this.$store.state.feedList.push(res.data.data[i]);
