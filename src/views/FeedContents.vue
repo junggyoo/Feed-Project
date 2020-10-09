@@ -29,11 +29,16 @@
                 <span>내림차순</span>
               </div>
             </div>
-            <FilterModal />
+            <div>
+              <FilterModal />
+            </div>
           </div>
         </nav>
-        <article v-for="feed in $store.state.feedList" v-bind:key="feed.id">
-          <div class="feedContainer">
+        <article
+          v-for="(feed, index) in $store.state.feedList"
+          v-bind:key="feed.id"
+        >
+          <div class="feedContainer" v-if="(index + 1) % 4 !== 0">
             <div class="feedWrapper">
               <div class="metaInfo">
                 <div class="categoryName">
@@ -53,6 +58,22 @@
               <div class="feedInfo">
                 <div class="title">{{ feed.title }}</div>
                 <div class="contents">{{ feed.contents }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="adFeedContainer" v-else-if="(index + 1) % 4 === 0">
+            <div class="adFeedWrapper">
+              <div class="sponsored"><span>sponsored</span></div>
+              <div class="contendsdWrapper">
+                <div class="adBox">
+                  <img src="" alt="" />
+                </div>
+                <div class="FeedBox">
+                  <div class="fourFeedInfo">
+                    <div class="fourTitle">{{ feed.title }}</div>
+                    <div class="fourContents">{{ feed.contents }}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -218,16 +239,15 @@ main {
     }
   }
   section {
-    width: 100%;
+    width: 86.5%;
     margin-left: 40px;
 
     nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
 
       .navWrapper {
-        width: 100%;
+        width: 86.5%;
         display: flex;
         justify-content: space-between;
       }
@@ -291,10 +311,9 @@ main {
 
     article {
       margin-top: 11px;
-      width: 756px;
+      width: 86.5%;
 
       .feedContainer {
-        width: 100%;
         height: 179px;
         border-radius: 5px;
         -webkit-backdrop-filter: blur(30px);
@@ -413,6 +432,88 @@ main {
           }
         }
       }
+
+      .adFeedContainer {
+        height: 255px;
+        border-radius: 5px;
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px);
+        border: solid 1px #e1e4e7;
+        background-color: #ffffff;
+
+        .adFeedWrapper {
+          padding: 20px 30px;
+
+          .sponsored {
+            span {
+              width: 61px;
+              height: 13px;
+              font-family: SpoqaHanSans;
+              font-size: 13px;
+              color: #adb5bd;
+            }
+          }
+
+          .contendsdWrapper {
+            display: flex;
+            margin-top: 17px;
+
+            .adBox {
+              width: 40%;
+              height: 179px;
+              margin-right: 20px;
+              border: solid 1px #e1e4e7;
+
+              img {
+                width: 100%;
+              }
+            }
+
+            .FeedBox {
+              width: 60%;
+              .fourFeedInfo {
+                .fourTitle {
+                  height: 50px;
+                  margin-bottom: 20px;
+                  font-family: SpoqaHanSans;
+                  font-size: 18px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.56;
+                  letter-spacing: normal;
+                  text-align: left;
+                  color: #282c30;
+
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+
+                .fourContents {
+                  height: 91px;
+                  font-family: SpoqaHanSans;
+                  font-size: 16px;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.56;
+                  letter-spacing: normal;
+                  text-align: left;
+                  color: #495057;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 4;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -465,7 +566,6 @@ main {
 
         article {
           width: 375px;
-          height: 179px;
           margin: 0 0 10px;
           box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.05);
           background-color: #ffffff;
@@ -516,6 +616,66 @@ main {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+              }
+            }
+          }
+
+          .adFeedContainer {
+            width: 375px;
+            height: 381px;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+
+            .adFeedWrapper {
+              width: 100%;
+              height: 100%;
+              padding: 20px 15px;
+
+              .contendsdWrapper {
+                flex-direction: column;
+                margin: 0;
+
+                .adBox {
+                  width: 344.5px;
+                  height: 179px;
+                  margin: 15px 0;
+                  border: solid 1px #e1e4e7;
+                }
+
+                .FeedBox {
+                  .fourFeedInfo {
+                    padding: 0;
+
+                    .fourTitle {
+                      width: 318px;
+                      height: 46px;
+                      font-family: SpoqaHanSans;
+                      font-size: 18px;
+                      font-weight: bold;
+                      font-stretch: normal;
+                      font-style: normal;
+                      line-height: 1.56;
+                      letter-spacing: normal;
+                      text-align: left;
+                      color: #282c30;
+                    }
+
+                    .fourContents {
+                      width: 321px;
+                      height: 41px;
+                      font-family: SpoqaHanSans;
+                      font-size: 16px;
+                      font-weight: normal;
+                      font-stretch: normal;
+                      font-style: normal;
+                      line-height: 1.56;
+                      letter-spacing: normal;
+                      text-align: left;
+                      color: #495057;
+                      -webkit-line-clamp: 2;
+                    }
+                  }
+                }
               }
             }
           }

@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import FeedContents from "../views/FeedContents.vue";
+import FeedDetail from "../views/FeedDetail.vue";
 
 const routes = [
   {
     path: "/",
     name: "FeedConetents",
     component: FeedContents,
+  },
+  {
+    path: "/detail",
+    name: "FeedDetail",
+    component: FeedDetail,
   },
 ];
 
