@@ -102,6 +102,7 @@ button {
   border: solid 1px #e1e4e7;
   background-color: #ffffff;
   text-align: center;
+  cursor: pointer;
 
   span {
     width: 22px;
@@ -148,6 +149,7 @@ button {
       top: 12px;
       right: 12px;
       color: #adb5bd;
+      cursor: pointer;
     }
 
     .modalWrapper {
@@ -176,6 +178,7 @@ button {
             width: 20px;
             height: 20px;
             margin-right: 5px;
+            cursor: pointer;
           }
 
           label {
@@ -204,6 +207,7 @@ button {
         height: 40px;
         border-radius: 3px;
         background-color: #00c854;
+        cursor: pointer;
 
         span {
           width: 55px;
@@ -244,9 +248,6 @@ button {
       background-color: #ffffff;
 
       .modalWrapper {
-        width: 100%;
-        height: 100%;
-
         .modalBody {
           .categoryBox {
             margin: 0;
@@ -257,7 +258,6 @@ button {
       .modalFooter {
         display: flex;
         justify-content: center;
-        padding: 0 30px 30px;
         margin: 0;
 
         button {
@@ -265,6 +265,7 @@ button {
           height: 40px;
           border-radius: 3px;
           background-color: #00c854;
+          cursor: pointer;
         }
       }
     }
