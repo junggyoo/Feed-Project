@@ -9,8 +9,8 @@ const routes = [
     component: FeedContents,
   },
   {
-    path: "/detail",
-    name: "FeedDetail",
+    path: "/:id",
+    name: "Feed",
     component: FeedDetail,
   },
 ];
