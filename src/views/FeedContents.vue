@@ -36,7 +36,8 @@
         </nav>
         <article
           v-for="(feed, index) in $store.state.feedList"
-          v-bind:key="feed.id"
+          :key="feed.id"
+          @click="linkToDetail(feed)"
         >
           <div class="feedContainer" v-if="(index + 1) % 4 !== 0">
             <div class="feedWrapper">
@@ -182,6 +183,10 @@ export default {
         .then(res => {
           this.$store.state.feedList = res.data.data.reverse();
         });
+    },
+
+    linkToDetail(feed) {
+      this.$router.push(`/${feed.id}`);
     }
   }
 };
@@ -312,6 +317,7 @@ main {
     article {
       margin-top: 11px;
       width: 86.5%;
+      cursor: pointer;
 
       .feedContainer {
         height: 179px;
